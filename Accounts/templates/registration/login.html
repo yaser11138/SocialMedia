@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'Accounts/login_style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Login Page</title>
+</head>
+<body>
+    <div class="login-container">
+        <div class="instagram-logo">
+            <i class="fab fa-instagram"></i>
+            <h1>Instagram</h1>
+        </div>
+        <form class="login-form">
+            <input type="text" placeholder="Username or Email" required>
+            <input type="password" placeholder="Password" required>
+            <button class="login-button" type="submit">Log In</button>
+        </form>
+        <div class="divider">
+            <span>OR</span>
+        </div>
+        <a href="#" class="forgot-password">Forgot password?</a>
+    </div>
+</body>
+</html>

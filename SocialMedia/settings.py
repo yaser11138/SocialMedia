@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+from django.urls import reverse_lazy
 import environ
 
 env = environ.Env()
@@ -95,9 +96,13 @@ DATABASES = {
     }
 }
 
+#
+LOGOUT_REDIRECT_URL = reverse_lazy("login")
+LOGIN_URL = reverse_lazy("login")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -139,6 +144,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 
 # phone_number settings
 PHONENUMBER_DEFAULT_REGION = "IR"

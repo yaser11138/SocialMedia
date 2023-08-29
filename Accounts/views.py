@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse
 from django.contrib.auth import login as dj_login
@@ -16,5 +17,9 @@ def login(request):
         return HttpResponse(user_form.errors)
     else:
         login_form = AuthenticationForm()
-        return render(request, "Accounts/login.html", context={"form": login_form})
+        return render(request, "Accounts/templates/registration/login.html", context={"form": login_form})
 
+
+@login_required
+def profile(request):
+    return render(request, "registration/profile.html")

@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #fafafa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    text-align: center;
+}
+
+.instagram-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.instagram-logo i {
+    font-size: 2rem;
+    color: #e1306c;
+    margin-right: 10px;
+}
+
+.instagram-logo h1 {
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.login-button {
+    background-color: #0095f6;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.login-button:hover {
+    background-color: #0077e6;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    color: #999;
+    margin: 15px 0;
+}
+
+.divider span {
+    flex-grow: 1;
+    border-bottom: 1px solid #ddd;
+}
+
+.forgot-password {
+    color: #0095f6;
+    font-size: 0.9rem;
+    text-decoration: none;
+    margin-top: 15px;
+    display: block;
+}
