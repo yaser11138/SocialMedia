@@ -1,0 +1,78 @@
+/* Reset some default styles */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Article Styles */
+.article {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.article-image {
+    flex: 1;
+    max-width: 200px;
+    margin-right: 20px;
+}
+
+.article-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.article-content {
+    flex: 2;
+}
+
+.article-title {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.article-link {
+    color: #0077e6;
+    text-decoration: none;
+}
+
+.article-link:hover {
+    text-decoration: underline;
+}
+
+/* Like Button Styles */
+.like-btn {
+    background-color: #0077e6;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.likes-count {
+    color: #555;
+    font-size: 0.9rem;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+}
