@@ -23,3 +23,7 @@ def login(request):
 @login_required
 def profile(request):
     return render(request, "registration/profile.html")
+
+
+def home(request):
+    return render(request, "index.html")
