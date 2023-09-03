@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'accounts/register.css' %}">
+    <title>Register</title>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-box">
+            <div class="logo-container">
+                <h1 class="logo">Instagram</h1>
+            </div>
+            <form class="register-form" method="post">
+                {% csrf_token %}
+                <input type="email" name="email" placeholder="Email" class="input-field" required>
+                <input type="text" name="username" placeholder="Username" class="input-field" required>
+                <input type="password" name="password1" placeholder="Password" class="input-field" required>
+                <input type="password" name="password2" placeholder="Confirm Password" class="input-field" required>
+                <button type="submit" class="register-btn">Sign Up</button>
+            </form>
+            <p class="terms">By signing up, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+            <div class="login-link">
+            Have an account? <a href="#">Log in</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

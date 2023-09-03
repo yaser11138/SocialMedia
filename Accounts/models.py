@@ -36,9 +36,14 @@ class MyUserManager(BaseUserManager):
         return user
 
 
+def user_directory_path(instance, filename):
+    return '{0}/profile_photo/{1}'.format(instance.username, filename)
+
+
 class MyUser(AbstractUser):
     phone_number = PhoneNumberField(blank=True)
     objects = MyUserManager()
-    email = models.EmailField(unique=True, validators=[EmailValidator],)
+    email = models.EmailField(unique=True, validators=[EmailValidator])
+    photo = models.ImageField(upload_to=user_directory_path, null=True)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username", "password"]

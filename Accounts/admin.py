@@ -23,7 +23,7 @@ class UserAmin(BaseUserAdmin):
     add_form = MyUserCreationForm
     fieldsets = (
         (None, {"fields": ("email", "password")}),
-        ("Personal info", {"fields": ("username","first_name", "last_name", "phone_number")}),
+        ("Personal info", {"fields": ("username", "first_name", "last_name", "phone_number", "photo")}),
         (
             "Permissions",
             {

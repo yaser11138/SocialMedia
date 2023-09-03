@@ -1,0 +1,125 @@
+/* Reset and Global Styles */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fafafa;
+    color: #333;
+}
+
+/* ... (Previous CSS Rules) ... */
+
+/* Updated File Input Styles */
+.profile-photo-input {
+    display: none; /* Hide the default file input */
+}
+
+.profile-photo-label {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #0095f6;
+    color: #fff;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    position: relative;
+}
+
+.profile-photo-label:hover {
+    background-color: #007acc;
+}
+
+.profile-photo-text {
+    font-size: 0.9rem;
+    margin-left: 10px; /* Add some spacing between the icon and text */
+    position: relative;
+    top: 2px; /* Adjust the vertical alignment */
+}
+
+/* ... (Previous CSS Rules) ... */
+
+/* Update Profile Form Styles */
+.update-profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.profile-preview {
+    max-width: 50%;
+    height: auto;
+}
+
+.update-profile-box {
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 360px;
+}
+
+.update-profile-heading {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.update-profile-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-photo-container {
+    margin-bottom: 1.5rem;
+}
+
+.profile-photo-label {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #0095f6;
+    color: #fff;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.profile-photo-label:hover {
+    background-color: #007acc;
+}
+
+.profile-photo-text {
+    font-size: 0.9rem;
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border: 1px solid #dbdbdb;
+    border-radius: 0.25rem;
+    font-size: 0.9rem;
+}
+
+.update-profile-btn {
+    background-color: #0095f6;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease-in-out;
+    outline: none; /* Remove the default button outline */
+}
+
+.update-profile-btn:hover {
+    background-color: #007acc;
+}
