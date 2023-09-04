@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'accounts/update_profile.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <title>Update Profile</title>
 </head>
 <body>
@@ -23,13 +24,23 @@
                         <br>
                         <span class="profile-photo-text">Change Photo</span>
                     </label>
-                    <input type="file" id="profile-photo" name="profile_photo" accept="image/*" class="profile-photo-input">
+                    <input type="file" id="profile-photo" name="photo" accept="image/*" class="profile-photo-input">
                 </div>
                 <input type="text" value="{{ form.username.value }}" name="username" placeholder="Username" class="input-field" required>
                 <input type="text" value="{{ form.first_name.value }}" name="first_name" placeholder="First Name" class="input-field" required>
                 <input type="text" value="{{ form.last_name.value }}" name="last_name" placeholder="Last Name" class="input-field" required>
                 <button type="submit" class="update-profile-btn">Save Changes</button>
             </form>
+            {% if form.errors %}
+                <div class="error-box">
+                    <div class="error-title">Error</div>
+                    <ul class="error-list">
+                        {% for error in form.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
         </div>
     </div>
     <script>

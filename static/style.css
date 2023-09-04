@@ -76,3 +76,52 @@ body {
         padding: 10px;
     }
 }
+
+/* styles.css */
+.custom-messages {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.custom-message {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.custom-message.error {
+    background-color: #ff6b6b;
+    color: #fff;
+}
+
+.custom-message.success {
+    background-color: #6bff84;
+    color: #000;
+}
+
+/* Add styles for other message types as needed */
+
+.error-box {
+    border: 1px solid #ff6b6b;
+    background-color: #ffeded;
+    color: #ff6b6b;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.error-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.error-list {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.error-list li {
+    margin-bottom: 5px;
+}

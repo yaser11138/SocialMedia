@@ -1,11 +1,14 @@
 from django.urls import path
 from django.contrib.auth import views as dj_views
-from .views import login, profile, register, update_profile
+from .views import login, register, update_profile, visit_profile
 
 urlpatterns = [
     path("login/", dj_views.LoginView.as_view(), name="login"),
     path("logout/", dj_views.LogoutView.as_view(), name="logout"),
-    path("profile", profile, name="profile"),
+    path("register/", register, name="register"),
+    path("update_profile/", update_profile, name="update_profile"),
+    path("profile/", visit_profile, name="visit_profile"),
+    # password change and reset password urls
     path("password-change/", dj_views.PasswordChangeView.as_view(), name="password_change"),
     path("password-change-done/", dj_views.PasswordChangeView.as_view(), name="password_change_done"),
     path("password-reset/", dj_views.PasswordResetView.as_view(), name="password_reset"),
@@ -16,7 +19,4 @@ urlpatterns = [
     path('password-reset-confirm-complete/',
          dj_views.PasswordResetCompleteView.as_view(),
          name="password_reset_complete"),
-    path("register/", register, name="register"),
-    path("update_profile/", update_profile, name="update_profile")
-
 ]
