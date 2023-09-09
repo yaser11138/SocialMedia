@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as dj_views
-from .views import login, register, update_profile, visit_profile
+from .views import login, register, update_profile, visit_profile, verify_secret_code
 
 urlpatterns = [
     path("login/", dj_views.LoginView.as_view(), name="login"),
@@ -19,4 +19,5 @@ urlpatterns = [
     path('password-reset-confirm-complete/',
          dj_views.PasswordResetCompleteView.as_view(),
          name="password_reset_complete"),
+    path('verify_code/<str:user_id>', verify_secret_code, name="verify_secret_code")
 ]

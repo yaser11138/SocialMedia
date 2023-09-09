@@ -45,5 +45,13 @@ class MyUser(AbstractUser):
     objects = MyUserManager()
     email = models.EmailField(unique=True, validators=[EmailValidator])
     photo = models.ImageField(upload_to=user_directory_path, null=True)
+    is_active = models.BooleanField(
+        default=False,
+        help_text=(
+            "Designates whether this user should be treated as active. "
+            "Unselect this instead of deleting accounts."
+        ),
+    )
+    bio = models.TextField(null=True, blank=True)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username", "password"]

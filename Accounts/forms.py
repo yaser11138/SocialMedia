@@ -16,3 +16,8 @@ class MyUserChangeForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = ("username", "first_name", "last_name", "photo")
+
+
+class SecertCodeForm(forms.Form):
+    secert_code = forms.CharField(max_length=10, min_length=1, required=True)
+    
