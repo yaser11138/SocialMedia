@@ -44,7 +44,7 @@ class MyUser(AbstractUser):
     phone_number = PhoneNumberField(blank=True)
     objects = MyUserManager()
     email = models.EmailField(unique=True, validators=[EmailValidator])
-    photo = models.ImageField(upload_to=user_directory_path, null=True)
+    photo = models.ImageField(upload_to=user_directory_path, default="default-profile.png")
     is_active = models.BooleanField(
         default=False,
         help_text=(
