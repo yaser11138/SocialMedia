@@ -1,6 +1,10 @@
 ### all of .env files inside our project
 *.env
 
+
+#media
+/media
+
 ### VisualStudioCode template
 .vscode/*
 !.vscode/settings.json

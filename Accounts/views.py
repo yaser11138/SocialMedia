@@ -61,7 +61,8 @@ def update_profile(request):
 
 @login_required
 def visit_profile(request):
-    return render(request, "accounts/profile.html")
+    posts = request.user.posts.all()
+    return render(request, "accounts/profile.html",context={"posts": posts})
 
 
 def verify_secret_code(request, user_id):

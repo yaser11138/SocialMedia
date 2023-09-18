@@ -1,3 +1,22 @@
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import PostForm
 # Create your views here.
+
+
+@login_required
+def add_post(request):
+    if request.method == "POST":
+        user = request.user
+        post_form = PostForm(data=request.POST, files=request.FILES)
+        if post_form.is_valid():
+            post = post_form.save(commit=False)
+            post.user = user
+            post.save()
+            return redirect("visit_profile")
+        else:
+            return render(request, "posts/add-post.html", context={"form": post_form})
+
+    else:
+        form = PostForm()
+        return render(request, "posts/add-post.html", context={"form": form})

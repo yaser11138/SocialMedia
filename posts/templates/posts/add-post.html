@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+    <link rel="stylesheet" href="{% static 'posts/add-post.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Create Post</h1>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label for="caption">Caption:</label>
+            <input type="text" id="caption" name="caption" required>
+
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
