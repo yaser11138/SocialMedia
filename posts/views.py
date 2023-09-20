@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm
+from .models import Post
 # Create your views here.
 
 
@@ -20,3 +21,8 @@ def add_post(request):
     else:
         form = PostForm()
         return render(request, "posts/add-post.html", context={"form": form})
+
+
+def view_post(request,slug):
+    post = Post.objects.get(slug=slug)
+    return render(request, "posts/post-detail.html", context={"post": post})

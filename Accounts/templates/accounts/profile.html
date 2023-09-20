@@ -75,7 +75,9 @@
 
         <div class="gallery">
             {% for post in posts %}
+                <a href="{{ post.get_absolute_url }}">
                 <div class="gallery-item" tabindex="0">
+
                     <img src="{{ post.image.url }}" class="gallery-image" alt="">
                     {% if image.type %}
                         <div class="gallery-item-type">
@@ -93,6 +95,7 @@
                         </ul>
                     </div>
                 </div>
+                </a>
             {% endfor %}
         </div>
 
