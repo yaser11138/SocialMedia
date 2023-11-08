@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth import login as dj_login
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.core.paginator import Paginator
 from .forms import MyUserCreationForm, MyUserChangeForm, SecertCodeForm
 from .secret import secert_code_genarator, encode_int_urlsafe, decode_int_urlsafe
 
@@ -62,7 +63,7 @@ def update_profile(request):
 @login_required
 def visit_profile(request):
     posts = request.user.posts.all()
-    return render(request, "accounts/profile.html",context={"posts": posts})
+    return render(request, "accounts/profile.html", context={"posts": posts})
 
 
 def verify_secret_code(request, user_id):
@@ -86,4 +87,3 @@ def verify_secret_code(request, user_id):
 
     form = SecertCodeForm()
     return render(request, "accounts/secret_code.html", context={"form": form, "form_errors": form_errors})
-

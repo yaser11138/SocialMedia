@@ -25,7 +25,7 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("view_post", kwargs={"slug": self.slug })
+        return reverse("view_post", args=(self.slug,))
 
     @property
     def is_updated(self):
@@ -40,3 +40,12 @@ class Post(models.Model):
         super().save(*args, **kwargs)
 
 
+class Comment(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="comments", on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
+    text = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="comment_likes", blank=True)
+
+    def __str__(self):
+        return f"{self.post} {self.user}"

@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Post
+from .models import Post, Comment
+
+
 # Register your models here.
 
 
@@ -7,3 +9,8 @@ from .models import Post
 class PostAdmin(admin.ModelAdmin):
     list_display = ["title", "user", "slug", "created"]
     list_filter = ["created"]
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    pass
