@@ -38,6 +38,10 @@ img {
     padding: 0 2rem;
 }
 
+#content-section {
+    overflow: auto;
+}
+
 .btn {
     display: inline-block;
     font: inherit;

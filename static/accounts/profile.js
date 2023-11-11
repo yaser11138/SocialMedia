@@ -1,20 +1,11 @@
-document.addEventListener("DOMContentLoaded", function () {
-    var loaderContainer = document.getElementById("loader2");
-    var galleryImages = document.querySelectorAll(".gallery img");
+let isLoading = false;
+let nextPage = 2; // Assuming you start with page 2, change this if necessary
 
-    var loadedImagesCount = 0;
+let imageContainer = document.querySelector("#content-section");
+let doc = document.querySelector("main");// Removed .container here
+console.log(imageContainer, doc);
 
-    if (galleryImages.length === 0) {
-        loaderContainer.style.display = "none"; // Hide the loader immediately if there are no images
-    } else {
-        galleryImages.forEach(function (image) {
-            image.addEventListener("load", function () {
-                loadedImagesCount++;
-                console.log(loadedImagesCount === galleryImages.length);
-                if (loadedImagesCount === galleryImages.length) {
-                    loaderContainer.style.display = "none"; // Hide the loader
-                }
-            });
-        });
-    }
+doc.addEventListener("scroll", (event) => {
+    alert(`Document scroll event fired!`);
 });
+

@@ -7,7 +7,7 @@ from .models import Post, Comment
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ["title", "user", "slug", "created"]
+    list_display = ["user", "slug", "created"]
     list_filter = ["created"]
 
 

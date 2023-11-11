@@ -1,12 +1,15 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>CodePen - Instagram Profile Layout with CSS Grid &amp; Flexbox</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-    <link rel="stylesheet" href="{% static  "accounts/profile.css" %}">
+    <meta charset="UTF-8">
+    <title>CodePen - Instagram Profile Layout with CSS Grid &amp; Flexbox</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static  "accounts/profile.css" %}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
@@ -15,98 +18,107 @@
     {% if messages %}
         {% for message in messages %}
             <script>Swal.fire(
-            'Good job!',
-            '{{message}}',
-            '{{ message.tags }}'
+                'Good job!',
+                '{{message}}',
+                '{{ message.tags }}'
             )</script>
         {% endfor %}
     {% endif %}
-	<div class="container">
+    <div class="container">
 
-		<div class="profile">
+        <div class="profile">
 
-			<div class="profile-image">
+            <div class="profile-image">
 
                 {% if request.user.photo %}
-                    <img src="{{request.user.photo.url}}" alt="Profile Photo" id="profile-preview" class="profile-preview" width="150" height="150">
+                    <img src="{{ request.user.photo.url }}" alt="Profile Photo" id="profile-preview"
+                         class="profile-preview" width="150" height="150">
                 {% else %}
-                    <img src="{% static 'default-profile.png' %}" alt="Profile Photo" id="profile-preview" class="profile-preview" width="150px" height="150px">
+                    <img src="{% static 'default-profile.png' %}" alt="Profile Photo" id="profile-preview"
+                         class="profile-preview" width="150px" height="150px">
                 {% endif %}
 
-			</div>
+            </div>
 
-			<div class="profile-user-settings">
+            <div class="profile-user-settings">
 
-				<h1 class="profile-user-name">{{request.user.username}}</h1>
+                <h1 class="profile-user-name">{{ request.user.username }}</h1>
 
-                <button class="btn profile-edit-btn"><a class="" href="{% url 'update_profile' %}">Update Profile</a></button>
+                <button class="btn profile-edit-btn"><a class="" href="{% url 'update_profile' %}">Update Profile</a>
+                </button>
 
-				<button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
+                <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog"
+                                                                                          aria-hidden="true"></i>
+                </button>
 
-			</div>
+            </div>
 
-			<div class="profile-stats">
+            <div class="profile-stats">
 
-				<ul>
-					<li><span class="profile-stat-count">164</span> posts</li>
-					<li><span class="profile-stat-count">188</span> followers</li>
-					<li><span class="profile-stat-count">206</span> following</li>
-				</ul>
+                <ul>
+                    <li><span class="profile-stat-count">164</span> posts</li>
+                    <li><span class="profile-stat-count">188</span> followers</li>
+                    <li><span class="profile-stat-count">206</span> following</li>
+                </ul>
 
-			</div>
+            </div>
 
-			<div class="profile-bio">
+            <div class="profile-bio">
 
-				<p><span class="profile-real-name">Jane Doe</span> Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️</p>
+                <p><span class="profile-real-name">Jane Doe</span> Lorem ipsum dolor sit, amet consectetur adipisicing
+                    elit 📷✈️🏕️</p>
 
-			</div>
+            </div>
 
-		</div>
-		<!-- End of profile section -->
+        </div>
+        <!-- End of profile section -->
 
-	</div>
-	<!-- End of container -->
+    </div>
+    <!-- End of container -->
 
 </header>
 
 <main>
 
-	<div class="container">
+    <div class="container" id="content-section">
 
         <div class="gallery">
             {% for post in posts %}
                 <a href="{{ post.get_absolute_url }}">
-                <div class="gallery-item" tabindex="0">
+                    <div class="gallery-item" tabindex="0">
 
-                    <img src="{{ post.image.url }}" class="gallery-image" alt="">
-                    {% if image.type %}
-                        <div class="gallery-item-type">
-                            <span class="visually-hidden">{{ image.type }}</span><i class="fas fa-clone" aria-hidden="true"></i>
+                        <img src="{{ post.image.url }}" class="gallery-image" alt="">
+                        {% if image.type %}
+                            <div class="gallery-item-type">
+                                <span class="visually-hidden">{{ image.type }}</span><i class="fas fa-clone"
+                                                                                        aria-hidden="true"></i>
+                            </div>
+                        {% endif %}
+                        <div class="gallery-item-info">
+                            <ul>
+                                <li class="gallery-item-likes">
+                                    <span class="visually-hidden">Likes:</span><i class="fas fa-heart"
+                                                                                  aria-hidden="true"></i> {{ image.likes }}
+                                </li>
+                                <li class="gallery-item-comments">
+                                    <span class="visually-hidden">Comments:</span><i class="fas fa-comment"
+                                                                                     aria-hidden="true"></i> {{ image.comments }}
+                                </li>
+                            </ul>
                         </div>
-                    {% endif %}
-                    <div class="gallery-item-info">
-                        <ul>
-                            <li class="gallery-item-likes">
-                                <span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> {{ image.likes }}
-                            </li>
-                            <li class="gallery-item-comments">
-                                <span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> {{ image.comments }}
-                            </li>
-                        </ul>
                     </div>
-                </div>
                 </a>
             {% endfor %}
         </div>
 
-		<!-- End of gallery -->
+        <!-- End of gallery <div class="loader"></div> -->
 
-		<div class="loader" id="loader2"></div>
 
-	</div>
-	<!-- End of container -->
-<script  src="{% static 'accounts/profile.js' %}"></script>
+    </div>
+    <!-- End of container -->
+
 </main>
 <!-- partial -->
+<script src="{% static 'accounts/profile.js' %}"></script>
 </body>
 </html>

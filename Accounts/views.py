@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, Http404, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse
 from django.contrib.auth import login as dj_login
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .forms import MyUserCreationForm, MyUserChangeForm, SecertCodeForm
 from .secret import secert_code_genarator, encode_int_urlsafe, decode_int_urlsafe
 
@@ -20,7 +20,6 @@ def login(request):
             dj_login(request, user)
             return redirect("visit_profile")
         else:
-            print(1)
             return render(request, "Accounts/templates/registration/login.html", context={"form": user_form})
     else:
         login_form = AuthenticationForm()
@@ -52,7 +51,7 @@ def update_profile(request):
         if user_data.is_valid():
             user_data.save()
             messages.success(request, "Profile updated successfully")
-            return redirect("visit_profile")
+            return redirect(reverse("visit_profile", kwargs={"username": request.user.username}))
         else:
             return render(request, "accounts/update_profile.html", context={"form": user_data})
     else:
@@ -61,9 +60,18 @@ def update_profile(request):
 
 
 @login_required
-def visit_profile(request):
-    posts = request.user.posts.all()
-    return render(request, "accounts/profile.html", context={"posts": posts})
+def visit_profile(request, username):
+    user = get_object_or_404(klass=User, username=username)
+    posts = user.posts.all()
+    paginator = Paginator(posts, 9)
+    try:
+        page_number = request.GET.get("page")
+        current_page_posts = paginator.page(page_number)
+    except PageNotAnInteger:
+        current_page_posts = paginator.page(1)
+    except EmptyPage:
+        raise Http404("The page Not Found")
+    return render(request, "accounts/profile.html", context={"posts": current_page_posts})
 
 
 def verify_secret_code(request, user_id):

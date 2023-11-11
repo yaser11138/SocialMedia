@@ -4,10 +4,11 @@ from .views import login, register, update_profile, visit_profile, verify_secret
 
 urlpatterns = [
     path("login/", dj_views.LoginView.as_view(), name="login"),
+    # path("login/", login, name="login"),
     path("logout/", dj_views.LogoutView.as_view(), name="logout"),
     path("register/", register, name="register"),
     path("update_profile/", update_profile, name="update_profile"),
-    path("profile/", visit_profile, name="visit_profile"),
+    path("profile/<str:username>/", visit_profile, name="visit_profile"),
     # password change and reset password urls
     path("password-change/", dj_views.PasswordChangeView.as_view(), name="password_change"),
     path("password-change-done/", dj_views.PasswordChangeView.as_view(), name="password_change_done"),
