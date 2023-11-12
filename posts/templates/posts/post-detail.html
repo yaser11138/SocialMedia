@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<!--suppress JSValidateTypes -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'posts/detail-post.css' %}">
+    <title>Instagram Post Detail</title>
+</head>
+<body>
+<div class="post-detail">
+    <div class="post-content">
+        <div class="post-header">
+            <img src="{{ post.user.photo.url }}" alt="Profile Picture" class="responsive-image">
+            <h2>Username</h2>
+        </div>
+        <div class="post-image">
+            <img src="{{ post.image.url }}" alt="Post Image">
+        </div>
+        <div class="icon-container">
+            <div class="heart {% if request.user in post.users_like.all %}red{% endif %}" id="{{ post.id }}">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 24 24" width="50">
+                    <path fill="white"
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 7.5 2 4.42 4.42 2 7.5 2c1.74 0 3.41.81 4.5 2.09C12.09 2.81 13.76 2 15.5 2 18.58 2 21 4.42 21 7.5c0 4.78-3.4 7.86-8.55 12.54L12 21.35z"
+                          stroke="black"></path>
+                </svg>
+            </div>
+            <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512">
+                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <style>svg {
+                        fill: #000000
+                    }</style>
+                    <path d="M123.6 391.3c12.9-9.4 29.6-11.8 44.6-6.4c26.5 9.6 56.2 15.1 87.8 15.1c124.7 0 208-80.5 208-160s-83.3-160-208-160S48 160.5 48 240c0 32 12.4 62.8 35.7 89.2c8.6 9.7 12.8 22.5 11.8 35.5c-1.4 18.1-5.7 34.7-11.3 49.4c17-7.9 31.1-16.7 39.4-22.7zM21.2 431.9c1.8-2.7 3.5-5.4 5.1-8.1c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208s-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6c-15.1 6.6-32.3 12.6-50.1 16.1c-.8 .2-1.6 .3-2.4 .5c-4.4 .8-8.7 1.5-13.2 1.9c-.2 0-.5 .1-.7 .1c-5.1 .5-10.2 .8-15.3 .8c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c4.1-4.2 7.8-8.7 11.3-13.5c1.7-2.3 3.3-4.6 4.8-6.9c.1-.2 .2-.3 .3-.5z"></path>
+                </svg>
+            </div>
+            <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512">
+                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <style>svg {
+                        fill: #000000
+                    }</style>
+                    <path d="M307 34.8c-11.5 5.1-19 16.6-19 29.2v64H176C78.8 128 0 206.8 0 304C0 417.3 81.5 467.9 100.2 478.1c2.5 1.4 5.3 1.9 8.1 1.9c10.9 0 19.7-8.9 19.7-19.7c0-7.5-4.3-14.4-9.8-19.5C108.8 431.9 96 414.4 96 384c0-53 43-96 96-96h96v64c0 12.6 7.4 24.1 19 29.2s25 3 34.4-5.4l160-144c6.7-6.1 10.6-14.7 10.6-23.8s-3.8-17.7-10.6-23.8l-160-144c-9.4-8.5-22.9-10.6-34.4-5.4z"></path>
+                </svg>
+            </div>
+        </div>
+        <div class="likes">
+            <span class="likes-count">{% if post.users_like.count != 0 %}
+                {{ post.users_like.all |length }}{% endif %}</span>
+            <strong class="likes-text">
+                {% if post.users_like.count == 1 %}
+                    like
+                {% elif post.users_like.count > 1 %}
+                    likes
+                {% endif %}
+            </strong>
+        </div>
+
+        <div class="post-caption">
+            <p>Caption text goes here. This is an example of a caption.</p>
+        </div>
+    </div>
+    <div class="comments">
+        <div class="post-comments">
+            {% for comment in post.comments.all %}
+                <div class="comment">
+                    <img src="{{ comment.user.photo.url }}" alt="Commenter Profile" class="responsive-image">
+                    <p><strong>{{ comment.user.username }}:</strong> {{ comment.text }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <!-- Add more comments here if needed -->
+        <div class="comment-from">
+            <div class="comment">
+                <textarea type="text" name="text" id="{{ post.id }}" style="width: 198px; height: 30px;"></textarea>
+                <button id="comment-button">add comment</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    let button = document.getElementById("comment-button");
+    button.addEventListener("click", function (e) {
+        e.preventDefault()
+        let comment_text = document.querySelector("div.comment textarea")
+        let form_data = new FormData()
+        form_data.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+        form_data.append("text", comment_text.value);
+        let variable = comment_text.id
+        let urlString = `/posts/comment/add/${variable}/`;
+        console.log(urlString)
+        axios.post(urlString, form_data)
+            .then(function (response) {
+                if (response.data.message === "succses") {
+                    let postComments = document.querySelector(".post-comments");
+                    let commentDiv = document.createElement("div");
+                    commentDiv.className = "comment";
+                    let commenterImage = document.createElement('img');
+                    commenterImage.src = "{{ request.user.photo.url }}"
+                    commenterImage.alt = 'Commenter Profile';
+                    commenterImage.classList.add('responsive-image');
+                    let commentTextElement = document.createElement('p');
+                    commentTextElement.innerHTML = '<strong>{{ request.user.username }}:</strong>' + comment_text.value;
+                    commentDiv.appendChild(commenterImage);
+                    commentDiv.appendChild(commentTextElement);
+                    postComments.appendChild(commentDiv);
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    });
+
+    const like_button = document.querySelector("div.heart");
+    let likes_count = document.querySelector("span.likes-count");
+    let likes_text = document.querySelector("strong.likes-text");
+    let post_id = like_button.getAttribute("id");
+    let like_url = "/posts/like/" + post_id + "/";
+    like_button.addEventListener("click", function (e) {
+        e.preventDefault()
+        let form_data = new FormData()
+        form_data.append("csrfmiddlewaretoken", "{{ csrf_token }}")
+        axios.post(like_url, form_data)
+            .then(function (response) {
+                like_button.classList.toggle('red');
+                if (response.data.message === "liked") {
+                    likes_count.innerHTML = (parseInt(likes_count.innerHTML) || 0) + 1;
+                } else {
+                    likes_count.innerHTML = Math.max((parseInt(likes_count.innerHTML) || 0) - 1, 0);
+                }
+                likes_text.innerHTML = likes_count.innerHTML == 1 ? "like" : "likes";
+
+                if (likes_count.innerHTML == 0) {
+                    likes_count.innerHTML = '';
+                    likes_text.innerHTML = '';
+                }
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    });
+
+</script>
+</body>
+</html>
