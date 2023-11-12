@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404, Http404, reverse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.contrib.auth.forms import AuthenticationForm
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import login as dj_login
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -62,16 +63,18 @@ def update_profile(request):
 @login_required
 def visit_profile(request, username):
     user = get_object_or_404(klass=User, username=username)
-    posts = user.posts.all()
-    paginator = Paginator(posts, 9)
-    try:
-        page_number = request.GET.get("page")
-        current_page_posts = paginator.page(page_number)
-    except PageNotAnInteger:
-        current_page_posts = paginator.page(1)
-    except EmptyPage:
-        raise Http404("The page Not Found")
-    return render(request, "accounts/profile.html", context={"posts": current_page_posts})
+    if user.is_active:
+        posts = user.posts.all()
+        paginator = Paginator(posts, 9)
+        try:
+            page_number = request.GET.get("page")
+            current_page_posts = paginator.page(page_number)
+        except PageNotAnInteger:
+            current_page_posts = paginator.page(1)
+        except EmptyPage:
+            raise Http404("The page Not Found")
+        return render(request, "accounts/profile.html", context={"posts": current_page_posts, "user": user})
+    raise Http404("The page Not Found")
 
 
 def verify_secret_code(request, user_id):
@@ -95,3 +98,17 @@ def verify_secret_code(request, user_id):
 
     form = SecertCodeForm()
     return render(request, "accounts/secret_code.html", context={"form": form, "form_errors": form_errors})
+
+
+@login_required
+@require_POST
+def follow(request):
+    following_user_id = request.POST.get("id")
+    following_user = User.objects.get(id=following_user_id)
+    follower_user = request.user
+    if following_user not in follower_user.following.all():
+        follower_user.following.add(following_user)
+        return JsonResponse(data={"data": "fuck you"})
+    else:
+        follower_user.following.remove(following_user)
+        return JsonResponse(data={"data": "fuck you more"})

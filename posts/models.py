@@ -6,7 +6,6 @@ from django.conf import settings
 
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="posts", on_delete=models.CASCADE)
-    title = models.CharField(max_length=10)
     slug = models.SlugField(unique=True, blank=True)
     users_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="post_likes", blank=True)
     image = models.ImageField(upload_to="images/%Y/%m/%d/")
@@ -22,7 +21,7 @@ class Post(models.Model):
     ordering = ['-created']
 
     def __str__(self):
-        return self.title
+        return f"{self.user}=>{self.slug}"
 
     def get_absolute_url(self):
         return reverse("view_post", args=(self.slug,))

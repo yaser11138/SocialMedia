@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
@@ -21,7 +21,7 @@ def add_post(request):
             post.user = user
             post.slug = slug
             post.save()
-            return redirect("visit_profile")
+            return redirect(reverse("visit_profile", kwargs={"username": user.username}))
         else:
             return render(request, "posts/add-post.html", context={"form": post_form})
 

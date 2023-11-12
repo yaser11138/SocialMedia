@@ -20,5 +20,12 @@ class MyUser(AbstractUser):
         ),
     )
     bio = models.TextField(null=True, blank=True)
+    following = models.ManyToManyField(to="self", through="Contact", related_name="followers", symmetrical=False)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username", "password"]
+
+
+class Contact(models.Model):
+    follower_user = models.ForeignKey(to=MyUser, related_name="contact_followers", on_delete=models.CASCADE)
+    following_user = models.ForeignKey(to=MyUser, related_name="contact_followings", on_delete=models.CASCADE)
+    date_followed = models.DateTimeField(auto_now_add=True)

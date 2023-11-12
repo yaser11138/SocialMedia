@@ -43,10 +43,16 @@
             <div class="profile-user-settings">
 
                 <h1 class="profile-user-name">{{ request.user.username }}</h1>
-
-                <button class="btn profile-edit-btn"><a class="" href="{% url 'update_profile' %}">Update Profile</a>
-                </button>
-
+                {% if request.user == user %}
+                    <button class="btn profile-edit-btn"><a class="" href="{% url 'update_profile' %}">Update
+                        Profile</a></button>
+                {% else %}
+                    {% if user in request.user.following.all %}
+                        <button class="btn profile-edit-btn" id="contact_button">UnFollow</button>
+                    {% else %}
+                        <button class="btn profile-edit-btn" id="contact_button">Follow</button>
+                    {% endif %}
+                {% endif %}
                 <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog"
                                                                                           aria-hidden="true"></i>
                 </button>
@@ -119,6 +125,29 @@
 
 </main>
 <!-- partial -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    let contact_button = document.getElementById("contact_button")
+    contact_button.addEventListener("click", () => {
+        let formdata = new FormData();
+        formdata.append("id", {{ user.id }})
+        formdata.append("csrfmiddlewaretoken", "{{ csrf_token }}")
+        axios.post("/accounts/follow/", formdata)
+            .then(res => {
+                if (contact_button.innerHTML === "Follow") {
+                    contact_button.innerHTML = "UnFollow"
+                } else {
+                    contact_button.innerHTML = "Follow"
+                }
+
+            })
+            .catch(reason => {
+                console.log(reason);
+            });
+
+
+    })
+</script>
 <script src="{% static 'accounts/profile.js' %}"></script>
 </body>
 </html>
