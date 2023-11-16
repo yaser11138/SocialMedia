@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'homepage/homepage.css' %}">
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-wrapper">
+        <img src="../../../static/homepage/img/logo.PNG" class="brand-img" alt="">
+        <input type="text" class="search-box" placeholder="search">
+        <div class="nav-items">
+            <img src="{% static 'homepage/img/home.PNG' %}" class="icon" alt="">
+            <img src="{% static 'homepage/img/messenger.PNG' %}" class="icon" alt="">
+            <img src="{% static 'homepage/img/add.PNG' %}" class="icon" alt="">
+            <img src="{% static 'homepage/img/explore.PNG' %}" class="icon" alt="">
+            <img src="{% static 'homepage/img/like.PNG' %}" class="icon" alt="">
+            <div class="icon user-profile"></div>
+        </div>
+    </div>
+</nav>
+<section class="main">
+    <div class="wrapper">
+        <div class="left-col">
+            <div class="posts">
+                {% for post in posts %}
+                    <div class="post">
+                        <div class="info">
+                            <div class="user">
+                                <div class="profile-pic"><img src='{{ post.user.photo.url }}' alt=""></div>
+                                <p class="username">{{ post.user.username }}</p>
+                            </div>
+                            <img src="{% static 'homepage/img/option.PNG' %}" class="options" alt="">
+                        </div>
+                        <img src="{{ post.image.url }}" class="post-image" alt="">
+                        <div class="post-content">
+                            <div class="reaction-wrapper">
+                                <img src="{% static  'homepage/img/like.PNG' %}" class="icon" alt="">
+                                <img src="{% static  'homepage/img/comment.PNG' %}" class="icon" alt="">
+                                <img src="{% static 'homepage/img/send.PNG' %}" class="icon" alt="">
+                                <img src="{% static  'homepage/img/save.PNG"' %}" class=" save icon" alt="">
+                            </div>
+                            <p class="likes">1,012 likes</p>
+                            <p class="description"><span>{{ post.user.username }} </span>{{ post.caption }}</p>
+                            <p class="post-time">2 minutes ago</p>
+                        </div>
+                        <div class="comment-wrapper">
+                            <img src="{% static  'homepage/img/smile.PNG' %}" class="icon" alt="">
+                            <input type="text" class="comment-box" placeholder="Add a comment">
+                            <button class="comment-btn">post</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="right-col">
+            <div class="profile-card">
+                <div class="profile-pic">
+                    <img src="{{ request.user.photo.url }}" alt="">
+                </div>
+                <div>
+                    <p class="username">{{ request.user.username }}</p>
+                    <p class="sub-text"></p>
+                </div>
+                <button class="action-btn">switch</button>
+            </div>
+            <p class="suggestion-text">Suggestions for you</p>
+            <div class="profile-card">
+                <div class="profile-pic">
+                    <img src="../../../static/homepage/img/cover 9.png" alt="">
+                </div>
+                <div>
+                    <p class="username">modern_web_channel</p>
+                    <p class="sub-text">followed bu user</p>
+                </div>
+                <button class="action-btn">follow</button>
+            </div>
+            <div class="profile-card">
+                <div class="profile-pic">
+                    <img src="../../../static/homepage/img/cover 10.png" alt="">
+                </div>
+                <div>
+                    <p class="username">modern_web_channel</p>
+                    <p class="sub-text">followed bu user</p>
+                </div>
+                <button class="action-btn">follow</button>
+            </div>
+            <div class="profile-card">
+                <div class="profile-pic">
+                    <img src="../../../static/homepage/img/cover 11.png" alt="">
+                </div>
+                <div>
+                    <p class="username">modern_web_channel</p>
+                    <p class="sub-text">followed bu user</p>
+                </div>
+                <button class="action-btn">follow</button>
+            </div>
+            <div class="profile-card">
+                <div class="profile-pic">
+                    <img src="../../../static/homepage/img/cover 12.png" alt="">
+                </div>
+                <div>
+                    <p class="username">modern_web_channel</p>
+                    <p class="sub-text">followed bu user</p>
+                </div>
+                <button class="action-btn">follow</button>
+            </div>
+            <div class="profile-card">
+                <div class="profile-pic">
+                    <img src="../../../static/homepage/img/cover 13.png" alt="">
+                </div>
+                <div>
+                    <p class="username">modern_web_channel</p>
+                    <p class="sub-text">followed bu user</p>
+                </div>
+                <button class="action-btn">follow</button>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="loading">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+
+    const five = 5;
+    const ten = 10;
+    let page_number = 2;
+    let is_loaded = false
+    let loading = document.querySelector(".loading")
+    let postsContainer = document.querySelector(".posts");
+    window.addEventListener('scroll', () => {
+        const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
+        if (clientHeight + scrollTop >= scrollHeight - 5 && is_loaded === false) {
+            loading.classList.add("show-loading")
+            form_data = new FormData()
+            form_data.append("csrfmiddlewaretoken", "{{ csrf_token }}")
+            axios.post(`?page=${page_number}`, form_data)
+                .then(function (response) {
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = response.data;
+                        const newPosts = tempDiv.querySelector(".posts");
+                        postsContainer.innerHTML += newPosts.innerHTML;
+                        console.log(newPosts)
+                        console.log(page_number)
+                        page_number++;
+
+                    }
+                )
+                .catch(function (error) {
+                    console.log(error.response.status)
+                    if (404 === error.response.status) {
+                        is_loaded = true
+                    }
+                })
+                .finally(function () {
+                    loading.classList.remove("show-loading");
+                });
+        }
+    })
+    ;
+
+</script>
+</body>
+</html>
