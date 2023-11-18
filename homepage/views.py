@@ -16,6 +16,7 @@ def homepage(request):
             following_post = following_post | friend.posts.all()
         all_posts = my_posts | following_post
         paginator = Paginator(all_posts, per_page=3)
+        num_pages = paginator.num_pages
         try:
             page_number = request.GET.get("page")
             current_page_posts = paginator.page(page_number)
@@ -23,6 +24,6 @@ def homepage(request):
             current_page_posts = paginator.page(1)
         except EmptyPage:
             raise Http404("Page Not Found")
-        return render(request, "homepage/homepage.html", context={"posts": current_page_posts})
+        return render(request, "homepage/homepage.html", context={"posts": current_page_posts, "num_pages": num_pages})
     else:
         return None

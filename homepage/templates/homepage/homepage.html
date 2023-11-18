@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,22 +35,15 @@
                             </div>
                             <img src="{% static 'homepage/img/option.PNG' %}" class="options" alt="">
                         </div>
-                        <img src="{{ post.image.url }}" class="post-image" alt="">
+                        <a href="{% url 'view_post' post.slug %}"><img src="{{ post.image.url }}" class="post-image"
+                                                                       alt=""></a>
                         <div class="post-content">
                             <div class="reaction-wrapper">
                                 <img src="{% static  'homepage/img/like.PNG' %}" class="icon" alt="">
-                                <img src="{% static  'homepage/img/comment.PNG' %}" class="icon" alt="">
-                                <img src="{% static 'homepage/img/send.PNG' %}" class="icon" alt="">
-                                <img src="{% static  'homepage/img/save.PNG"' %}" class=" save icon" alt="">
                             </div>
-                            <p class="likes">1,012 likes</p>
+                            <p class="likes">{{ post.likes.all | length }} likes</p>
                             <p class="description"><span>{{ post.user.username }} </span>{{ post.caption }}</p>
-                            <p class="post-time">2 minutes ago</p>
-                        </div>
-                        <div class="comment-wrapper">
-                            <img src="{% static  'homepage/img/smile.PNG' %}" class="icon" alt="">
-                            <input type="text" class="comment-box" placeholder="Add a comment">
-                            <button class="comment-btn">post</button>
+                            <p class="post-time"> Posted {{ post.created|time_passed_since }} ago</p>
                         </div>
                     </div>
                 {% endfor %}
@@ -132,12 +126,17 @@
     const five = 5;
     const ten = 10;
     let page_number = 2;
+    let max_page = parseInt("{{ num_pages }}");
     let is_loaded = false
     let loading = document.querySelector(".loading")
     let postsContainer = document.querySelector(".posts");
     window.addEventListener('scroll', () => {
+        console.log(is_loaded)
+        if (is_loaded === true) {
+            return 0
+        }
         const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
-        if (clientHeight + scrollTop >= scrollHeight - 5 && is_loaded === false) {
+        if (clientHeight + scrollTop >= scrollHeight - 5) {
             loading.classList.add("show-loading")
             form_data = new FormData()
             form_data.append("csrfmiddlewaretoken", "{{ csrf_token }}")
@@ -155,12 +154,12 @@
                 )
                 .catch(function (error) {
                     console.log(error.response.status)
-                    if (404 === error.response.status) {
-                        is_loaded = true
-                    }
                 })
                 .finally(function () {
                     loading.classList.remove("show-loading");
+                    if (max_page === page_number) {
+                        is_loaded = true;
+                    }
                 });
         }
     })
